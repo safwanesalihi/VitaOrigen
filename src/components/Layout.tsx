@@ -5,11 +5,10 @@ import {
   Instagram, 
   Facebook, 
   Menu, 
-  X as CloseIcon, 
+  X, 
   ShoppingCart,
   CheckCircle2,
   Loader2,
-  X,
   Trash2,
   ArrowRight,
   Package,
@@ -179,7 +178,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div className="flex justify-between items-center mb-16">
                 <span className="font-serif text-xl font-bold text-espresso">Vita<span className="text-gold italic">Origen</span></span>
                 <button onClick={() => setIsMenuOpen(false)} className="text-espresso p-2 hover:bg-gold/10 rounded-full transition-colors">
-                  <CloseIcon size={24} />
+                  <X size={24} />
                 </button>
               </div>
 
@@ -234,7 +233,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </p>
                 </div>
                 <button onClick={() => setIsCartOpen(false)} className="text-espresso p-2 hover:bg-gold/10 rounded-full transition-colors">
-                  <CloseIcon size={24} />
+                  <X size={24} />
                 </button>
               </div>
 

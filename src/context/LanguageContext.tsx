@@ -158,7 +158,8 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   }, [language]);
 
   const t = (key: string) => {
-    return (translations[language] as any)[key] || key;
+    const langData = translations[language] || translations.fr;
+    return (langData as any)[key] || key;
   };
 
   return (
