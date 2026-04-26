@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-accent: "Cormorant Garamond", serif;
+  
+  --color-cream: #FAF7F2;
+  --color-cream-alt: #F2EDE4;
+  --color-espresso: #1A1209;
+  --color-espresso-2: #0E0A04;
+  --color-gold: #C9973A;
+  --color-gold-lt: #E8C56A;
+  --color-taupe: #7A6A50;
+  --color-taupe-lt: #A8977E;
+}
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Cormorant+Garamond:ital,wght@0,400;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+  body {
+    @apply bg-cream text-espresso antialiased selection:bg-gold/20 selection:text-espresso;
+    font-family: var(--font-sans);
+  }
+}
+
+@layer utilities {
+  .ease-out-custom {
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .ease-spring {
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+@keyframes f1 { 0%,100%{transform:translateY(0) rotate(-3deg);} 50%{transform:translateY(-22px) rotate(4deg);} }
+@keyframes f2 { 0%,100%{transform:translateY(0) rotate(5deg);} 50%{transform:translateY(-18px) rotate(-2deg);} }
+@keyframes f3 { 0%,100%{transform:translateY(0) rotate(-7deg);} 33%{transform:translateY(-14px) rotate(-1deg);} 66%{transform:translateY(-26px) rotate(5deg);} }
+
+.animate-f1 { animation: f1 7.2s ease-in-out infinite; }
+.animate-f2 { animation: f2 8.8s ease-in-out infinite; }
+.animate-f3 { animation: f3 9.1s ease-in-out infinite; }
