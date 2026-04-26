@@ -1,5 +1,6 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
+// Deploy trigger with fixed git config
 import path from 'path';
 import {defineConfig, loadEnv} from 'vite';
 
