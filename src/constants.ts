@@ -16,6 +16,7 @@ export interface Product {
   color: string;
   bgColor: string;
   emoji: string;
+  image: string;
 }
 
 export const PRODUCTS: Product[] = [
@@ -26,6 +27,7 @@ export const PRODUCTS: Product[] = [
     color: '#EC4899',
     bgColor: '#FDF2F8',
     emoji: '🍓',
+    image: '/Products/2.png',
   },
   {
     id: 'blueberry',
@@ -34,6 +36,7 @@ export const PRODUCTS: Product[] = [
     color: '#3B82F6',
     bgColor: '#EFF6FF',
     emoji: '🫐',
+    image: '/Products/1.png',
   },
   {
     id: 'raspberry',
@@ -42,6 +45,7 @@ export const PRODUCTS: Product[] = [
     color: '#F43F5E',
     bgColor: '#FFF1F2',
     emoji: '🍇',
+    image: '/Products/5.png',
   },
   {
     id: 'cherry',
@@ -50,6 +54,7 @@ export const PRODUCTS: Product[] = [
     color: '#E11D48',
     bgColor: '#FFF1F2',
     emoji: '🍒',
+    image: '/Products/3.png',
   },
   {
     id: 'banana',
@@ -58,6 +63,7 @@ export const PRODUCTS: Product[] = [
     color: '#EAB308',
     bgColor: '#FEFCE8',
     emoji: '🍌',
+    image: '/Products/6.png',
   },
   {
     id: 'pineapple',
@@ -66,6 +72,7 @@ export const PRODUCTS: Product[] = [
     color: '#F59E0B',
     bgColor: '#FFFBEB',
     emoji: '🍍',
+    image: '/Products/4.png',
   },
   {
     id: 'orange',
@@ -74,6 +81,7 @@ export const PRODUCTS: Product[] = [
     color: '#F97316',
     bgColor: '#FFF7ED',
     emoji: '🍊',
+    image: '/Products/12.png',
   },
   {
     id: 'kiwi',
@@ -82,6 +90,7 @@ export const PRODUCTS: Product[] = [
     color: '#10B981',
     bgColor: '#ECFDF5',
     emoji: '🥝',
+    image: '/Products/9.png',
   },
 ];
 
@@ -93,6 +102,7 @@ export interface Pack {
 }
 
 export const PACKS: Pack[] = [
+  { id: 'single', name: 'À l\'unité', size: 1, price: 25 },
   { id: 'mini', name: 'Mini Pack', size: 4, price: 89 },
   { id: 'standard', name: 'Standard Pack', size: 8, price: 149 },
   { id: 'party', name: 'Party Pack', size: 12, price: 249 },

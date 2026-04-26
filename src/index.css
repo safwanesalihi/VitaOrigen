@@ -5,14 +5,14 @@
   --font-serif: "Playfair Display", serif;
   --font-accent: "Cormorant Garamond", serif;
   
-  --color-cream: #FAF7F2;
-  --color-cream-alt: #F2EDE4;
-  --color-espresso: #1A1209;
-  --color-espresso-2: #0E0A04;
-  --color-gold: #C9973A;
-  --color-gold-lt: #E8C56A;
-  --color-taupe: #7A6A50;
-  --color-taupe-lt: #A8977E;
+  --color-cream: #FFFFFF;
+  --color-cream-alt: #F4FBFC;
+  --color-espresso: #1A4D5C; /* Darker, richer teal for better contrast */
+  --color-espresso-2: #0D2B33;
+  --color-gold: #F04E7D; /* More vibrant magenta */
+  --color-gold-lt: #FFDDE8;
+  --color-taupe: #5BA8BD;
+  --color-taupe-lt: #CDE6ED;
 }
 
 @layer base {
