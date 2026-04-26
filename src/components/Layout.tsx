@@ -62,6 +62,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const navItems = [
     { name: t('nav_saveurs'), path: "/saveurs" },
     { name: t('nav_concept'), path: "/concept" },
+    { name: t('nav_coffrets'), path: "/coffrets" },
     { name: t('nav_why'), path: "/pourquoi-nous" }
   ];
 
@@ -322,7 +323,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <div className="text-right">
                       <span className="text-3xl font-black text-espresso">
                         {totalInPack < (selectedPack?.size || 4) 
-                          ? totalInPack * 25 
+                          ? totalInPack * 7 
                           : (selectedPack?.price || 0)
                         }
                       </span>
@@ -338,7 +339,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </button>
                   {totalInPack < (selectedPack?.size || 4) && (
                     <p className="text-center text-[10px] font-bold text-gold/40 uppercase tracking-[0.2em] mt-4">
-                      Tarif à l'unité (25 MAD/bille)
+                      Tarif à l'unité (7 MAD/bille)
                     </p>
                   )}
                 </div>

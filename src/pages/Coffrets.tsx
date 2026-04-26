@@ -1,7 +1,8 @@
 import { motion } from "motion/react";
-import { Plus, Minus, Trash2, Package } from "lucide-react";
+import { Plus, Minus, Trash2, Package, X } from "lucide-react";
 import { PRODUCTS, PACKS } from "../constants";
 import { useCart } from "../context/CartContext";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Coffrets() {
   const { 
@@ -12,6 +13,7 @@ export default function Coffrets() {
     setIsCheckoutOpen,
     totalInPack
   } = useCart();
+  const { t, language } = useLanguage();
 
   const addToPack = (productId: string) => {
     if (!selectedPack) return;
@@ -35,16 +37,16 @@ export default function Coffrets() {
   };
 
   return (
-    <section className="py-[100px] md:py-[160px] px-[20px] md:px-[64px] bg-[#F8FDFF]">
-      <div className="max-w-[1400px] mx-auto bg-white rounded-[48px] shadow-[0_40px_120px_rgba(26,77,92,0.1)] overflow-hidden border border-taupe/10 flex flex-col lg:flex-row min-h-[750px]">
+    <section className={`py-[100px] md:py-[160px] px-[20px] md:px-[64px] bg-cream ${language === 'ar' ? 'font-sans' : ''}`}>
+      <div className={`max-w-[1400px] mx-auto bg-white rounded-[48px] shadow-[0_40px_120px_rgba(26,77,92,0.1)] overflow-hidden border border-taupe/10 flex flex-col ${language === 'ar' ? 'lg:flex-row-reverse' : 'lg:flex-row'} min-h-[750px]`}>
         {/* Builder Sidebar */}
-        <div className="lg:w-[38%] bg-gradient-to-b from-espresso to-espresso-2 p-10 md:p-16 flex flex-col justify-between text-white relative">
+        <div className={`lg:w-[38%] bg-gradient-to-b from-espresso to-espresso-2 p-10 md:p-16 flex flex-col justify-between text-white relative ${language === 'ar' ? 'text-right' : 'text-left'}`}>
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none" />
           
           <div className="relative z-10">
-            <span className="text-gold text-[12px] font-black uppercase tracking-[0.3em] mb-6 block">Artisanat sur mesure</span>
+            <span className="text-gold text-[12px] font-black uppercase tracking-[0.3em] mb-6 block">{t('coffret_tag')}</span>
             <h3 className="font-serif text-[48px] md:text-[56px] font-black leading-[1] mb-12">
-              Composez votre <br /><span className="text-gold italic">Chef-d'œuvre</span>
+              {t('coffret_title_1')} <br /><span className="text-gold italic">{t('coffret_title_2')}</span> {t('coffret_title_3' as any)}
             </h3>
             
             <div className="space-y-4">
@@ -56,13 +58,13 @@ export default function Coffrets() {
                     selectedPack?.id === pack.id 
                     ? "border-gold bg-gold/10 shadow-[0_0_32px_rgba(240,78,125,0.2)]" 
                     : "border-white/5 hover:border-white/20 bg-white/5"
-                  }`}
+                  } ${language === 'ar' ? 'flex-row-reverse' : ''}`}
                 >
-                  <div className="text-left relative z-10">
+                  <div className={`relative z-10 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
                     <div className={`font-black text-[15px] uppercase tracking-[0.18em] mb-1 ${selectedPack?.id === pack.id ? "text-gold" : "text-white/80"}`}>
                       {pack.name}
                     </div>
-                    <div className="text-[12px] text-white/40 font-bold">Capacité: {pack.size} {pack.size === 1 ? 'bille' : 'billes'}</div>
+                    <div className="text-[12px] text-white/40 font-bold">{t('coffret_capacity')}: {pack.size} {t('coffret_billes' as any)}</div>
                   </div>
                   <div className="text-[24px] font-black text-gold relative z-10">{pack.price} MAD</div>
                 </button>
@@ -72,8 +74,8 @@ export default function Coffrets() {
 
           {selectedPack && (
             <div className="mt-16 pt-10 border-t border-white/10 relative z-10">
-              <div className="flex justify-between items-end mb-4">
-                <span className="text-[12px] font-black uppercase tracking-[0.2em] text-white/40">Remplissage</span>
+              <div className={`flex justify-between items-end mb-4 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
+                <span className="text-[12px] font-black uppercase tracking-[0.2em] text-white/40">{t('coffret_filling')}</span>
                 <span className="text-[32px] font-serif italic text-gold">{totalInPack} / {selectedPack.size}</span>
               </div>
               <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -86,7 +88,10 @@ export default function Coffrets() {
               <button 
                 onClick={() => {
                   if (totalInPack < selectedPack.size) {
-                    alert(`Veuillez ajouter encore ${selectedPack.size - totalInPack} boules pour compléter votre ${selectedPack.name}.`);
+                    const msg = language === 'fr' 
+                      ? `Veuillez ajouter encore ${selectedPack.size - totalInPack} boules pour compléter votre ${selectedPack.name}.`
+                      : `يرجى إضافة ${selectedPack.size - totalInPack} حبات أخرى لإكمال ${selectedPack.name}.`;
+                    alert(msg);
                   } else {
                     setIsCheckoutOpen(true);
                   }
@@ -97,7 +102,7 @@ export default function Coffrets() {
                   : "bg-white/5 text-white/20 cursor-not-allowed"
                 }`}
               >
-                {totalInPack === 0 ? "Panier Vide" : totalInPack < selectedPack.size ? "Compléter le Coffret" : "Passer à la Caisse"}
+                {totalInPack === 0 ? t('coffret_empty') : totalInPack < selectedPack.size ? t('coffret_complete') : t('coffret_checkout')}
               </button>
             </div>
           )}
@@ -110,8 +115,8 @@ export default function Coffrets() {
               <div className="w-24 h-24 bg-cream-alt text-gold rounded-full flex items-center justify-center mb-10 shadow-inner">
                 <Package size={44} />
               </div>
-              <h4 className="font-serif text-4xl font-black text-espresso mb-4">Choisir un coffret</h4>
-              <p className="text-[17px] text-taupe font-medium max-w-[400px]">Sélectionnez la taille de votre coffret sur la gauche pour commencer la composition.</p>
+              <h4 className="font-serif text-4xl font-black text-espresso mb-4">{t('coffret_select_pack')}</h4>
+              <p className="text-[17px] text-taupe font-medium max-w-[400px]">{t('coffret_select_desc')}</p>
             </div>
           ) : (
             <div className="h-full flex flex-col">
@@ -130,11 +135,11 @@ export default function Coffrets() {
                         } ${totalInPack >= selectedPack.size && count === 0 ? "opacity-30 grayscale" : ""}`}
                       >
                         <img src={product.image} alt={product.name} className="w-20 h-20 object-contain group-hover:scale-110 group-hover:rotate-6 transition-all duration-500" />
-                        <span className="text-[11px] font-black uppercase tracking-widest text-espresso line-clamp-1">{product.name}</span>
+                        <span className="text-[11px] font-black uppercase tracking-widest text-espresso line-clamp-1">{t(`flavor_${product.id}_name` as any)}</span>
                       </button>
                       
                       {count > 0 && (
-                        <div className="absolute -top-3 -right-2 flex flex-col items-center gap-2">
+                        <div className={`absolute -top-3 ${language === 'ar' ? '-left-2' : '-right-2'} flex flex-col items-center gap-2`}>
                            <div className="w-8 h-8 bg-gold text-white rounded-full flex items-center justify-center font-black text-xs ring-4 ring-white shadow-xl mb-1">
                             {count}
                           </div>
@@ -151,13 +156,13 @@ export default function Coffrets() {
 
               {totalInPack > 0 && (
                 <div className="mt-auto pt-10 border-t border-taupe/10">
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-[13px] font-black uppercase tracking-[0.2em] text-espresso">Récapitulatif</span>
+                  <div className={`flex items-center justify-between mb-6 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
+                    <span className="text-[13px] font-black uppercase tracking-[0.2em] text-espresso">{t('coffret_recap')}</span>
                     <button onClick={() => setCustomPack({})} className="text-gold hover:text-espresso transition-colors flex items-center gap-2 text-[11px] font-black uppercase tracking-widest">
-                      <Trash2 size={16} /> Tout vider
+                      <Trash2 size={16} /> {t('coffret_clear')}
                     </button>
                   </div>
-                  <div className="flex flex-wrap gap-4">
+                  <div className={`flex flex-wrap gap-4 ${language === 'ar' ? 'flex-row-reverse' : ''}`}>
                     {Object.entries(customPack).map(([id, count]) => {
                       const p = PRODUCTS.find(x => x.id === id);
                       return (
@@ -165,7 +170,7 @@ export default function Coffrets() {
                           <div className="w-20 h-20 bg-cream-alt rounded-[24px] border border-gold/10 flex items-center justify-center p-3 group-hover:border-gold transition-all duration-500">
                             <img src={p?.image} alt={p?.name} className="w-full h-full object-contain" />
                           </div>
-                          <div className="absolute -top-2 -right-2 w-7 h-7 bg-gold text-white rounded-full flex items-center justify-center text-[11px] font-black shadow-xl ring-4 ring-white">
+                          <div className={`absolute -top-2 ${language === 'ar' ? '-left-2' : '-right-2'} w-7 h-7 bg-gold text-white rounded-full flex items-center justify-center text-[11px] font-black shadow-xl ring-4 ring-white`}>
                             {count}
                           </div>
                         </div>

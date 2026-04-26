@@ -102,8 +102,8 @@ export interface Pack {
 }
 
 export const PACKS: Pack[] = [
-  { id: 'single', name: 'À l\'unité', size: 1, price: 25 },
-  { id: 'mini', name: 'Mini Pack', size: 4, price: 89 },
-  { id: 'standard', name: 'Standard Pack', size: 8, price: 149 },
-  { id: 'party', name: 'Party Pack', size: 12, price: 249 },
+  { id: 'single', name: 'À l\'unité', size: 1, price: 7 },
+  { id: 'pack4', name: 'Pack de 4', size: 4, price: 26 },
+  { id: 'pack8', name: 'Pack de 8', size: 8, price: 54 },
+  { id: 'pack16', name: 'Pack de 16', size: 16, price: 110 },
 ];

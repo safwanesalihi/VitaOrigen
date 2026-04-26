@@ -18,13 +18,13 @@ export const useCheckout = () => {
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (totalInPack === 0) return;
+    if (totalInPack === 0 && !selectedPack) return;
 
     setIsSubmitting(true);
     setOrderStatus('idle');
 
     try {
-      const finalPrice = totalInPack < (selectedPack?.size || 4) ? totalInPack * 25 : (selectedPack?.price || 0);
+      const finalPrice = totalInPack < (selectedPack?.size || 4) ? totalInPack * 7 : (selectedPack?.price || 0);
 
       const { error } = await supabase
         .from('orders')
@@ -40,27 +40,44 @@ export const useCheckout = () => {
 
       if (error) throw error;
       
-      const flavors = Object.entries(customPack)
-        .map(([id, count]) => {
-          const p = PRODUCTS.find(x => x.id === id);
-          return `- ${p?.name}: ${count}`;
-        })
-        .join('%0A');
+      const flavors = Object.keys(customPack).length > 0 
+        ? Object.entries(customPack)
+            .map(([id, count]) => {
+              const p = PRODUCTS.find(x => x.id === id);
+              return `- ${p?.name}: ${count}`;
+            })
+            .join('%0A')
+        : "Sélection Découverte (Mix de saveurs)";
 
 
 
-      const message = `Bonjour VitaOrigen! %0A%0AJe souhaite commander:%0A*${selectedPack?.name || 'Commande à l\'unité'}*%0A%0A*Total:* ${finalPrice} MAD%0A%0A*Détails:*%0A${flavors}%0A%0A*Infos Client:*%0A- Nom: ${customerInfo.name}%0A- Tél: ${customerInfo.phone}%0A- Adresse: ${customerInfo.address}`;
+      const message = encodeURIComponent(`Bonjour VitaOrigen! 
+
+Je souhaite commander:
+*${selectedPack?.name || 'Commande à l\'unité'}*
+
+*Total:* ${finalPrice} MAD
+
+*Détails:*
+${flavors.replace(/%0A/g, '\n')}
+
+*Infos Client:*
+- Nom: ${customerInfo.name}
+- Tél: ${customerInfo.phone}
+- Adresse: ${customerInfo.address}`);
       
       const whatsappUrl = `https://wa.me/212609742264?text=${message}`;
       
+      // We set success state but redirect immediately
       setOrderStatus('success');
+      
+      // Use window.location.href directly for better mobile compatibility
+      window.location.href = whatsappUrl;
+      
+      // Reset state for next time
       setCustomPack({});
       setSelectedPack(null);
       setCustomerInfo({ name: '', phone: '', address: '' });
-
-      setTimeout(() => {
-        window.location.href = whatsappUrl;
-      }, 800);
 
     } catch (error) {
       console.error('Order failed:', error);
