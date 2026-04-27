@@ -288,9 +288,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 <span className="font-black text-espresso text-sm">{count}</span>
                                 <button 
                                   onClick={() => {
-                                    if (totalInPack < (selectedPack?.size || 999)) {
-                                      setCustomPack(prev => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
-                                    }
+                                    setCustomPack(prev => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
                                   }}
                                   className="w-6 h-6 rounded-full border border-taupe/20 flex items-center justify-center text-espresso hover:border-gold hover:text-gold transition-colors"
                                 >
@@ -322,9 +320,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     <span className="text-lg font-bold text-espresso">Total</span>
                     <div className="text-right">
                       <span className="text-3xl font-black text-espresso">
-                        {totalInPack < (selectedPack?.size || 4) 
-                          ? totalInPack * 7 
-                          : (selectedPack?.price || 0)
+                        {selectedPack 
+                          ? (totalInPack <= selectedPack.size 
+                              ? (totalInPack < selectedPack.size ? totalInPack * 7 : selectedPack.price)
+                              : selectedPack.price + (totalInPack - selectedPack.size) * 7)
+                          : totalInPack * 7
                         }
                       </span>
                       <span className="text-sm font-bold text-taupe ml-1">MAD</span>
@@ -488,7 +488,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                           Traitement...
                         </>
                       ) : (
-                        `Confirmer la commande · ${selectedPack?.price} MAD`
+                        `Confirmer la commande · ${selectedPack 
+                          ? (totalInPack <= selectedPack.size 
+                              ? (totalInPack < selectedPack.size ? totalInPack * 7 : selectedPack.price)
+                              : selectedPack.price + (totalInPack - selectedPack.size) * 7)
+                          : totalInPack * 7
+                        } MAD`
                       )}
                     </button>
                   </form>

@@ -24,7 +24,11 @@ export const useCheckout = () => {
     setOrderStatus('idle');
 
     try {
-      const finalPrice = totalInPack < (selectedPack?.size || 4) ? totalInPack * 7 : (selectedPack?.price || 0);
+      const finalPrice = selectedPack 
+        ? (totalInPack <= selectedPack.size 
+            ? (totalInPack < selectedPack.size ? totalInPack * 7 : selectedPack.price)
+            : selectedPack.price + (totalInPack - selectedPack.size) * 7)
+        : totalInPack * 7;
 
       const { error } = await supabase
         .from('orders')

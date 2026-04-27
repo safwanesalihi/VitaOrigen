@@ -9,29 +9,17 @@ export default function Saveurs() {
   const { t, language } = useLanguage();
 
   const addToCurrentPack = (productId: string) => {
-    // If no pack is selected, default to the pack of 4
-    let pack = selectedPack;
-    if (!pack) {
-      pack = PACKS.find(p => p.id === 'pack4') || PACKS[1];
-      setSelectedPack(pack);
-    }
-
-    if (totalInPack < pack.size) {
-      setCustomPack(prev => ({
-        ...prev,
-        [productId]: (prev[productId] || 0) + 1
-      }));
-    } else {
-      const msg = language === 'fr' 
-        ? `Votre ${pack.name} est déjà complet. Veuillez ajuster votre panier.`
-        : `حزمة ${pack.name} ممتلئة بالفعل. يرجى تعديل سلتك.`;
-      alert(msg);
-    }
+    setCustomPack(prev => ({
+      ...prev,
+      [productId]: (prev[productId] || 0) + 1
+    }));
   };
 
   const buySingleProduct = (productId: string) => {
-    setSelectedPack({ id: 'single', name: language === 'fr' ? 'À l\'unité' : 'بشكل فردي', size: 1, price: 7 });
-    setCustomPack({ [productId]: 1 });
+    setCustomPack(prev => ({
+      ...prev,
+      [productId]: (prev[productId] || 0) + 1
+    }));
     setIsCheckoutOpen(true);
   };
 
