@@ -74,8 +74,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         ? "bg-white/80 shadow-[0_8px_48px_rgba(26,77,92,0.12)] border-taupe/10" 
         : "bg-transparent border-transparent"
       }`}>
-        <Link to="/" className="font-serif text-[24px] md:text-[28px] font-black text-espresso tracking-tight group shrink-0">
-          Vita<span className="text-gold italic group-hover:tracking-wider transition-all duration-500">Origen</span>
+        <Link to="/" className="group shrink-0">
+          <img src="/logo.png" alt="VitaOrigen" className="h-[40px] md:h-[50px] w-auto transition-transform duration-500 group-hover:scale-105" />
         </Link>
 
         <ul className="hidden lg:flex items-center gap-[44px] absolute left-1/2 -translate-x-1/2">
@@ -178,7 +178,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className="fixed top-0 right-0 bottom-0 w-[80%] max-w-[400px] bg-cream z-[1002] shadow-2xl p-10 flex flex-col"
             >
               <div className="flex justify-between items-center mb-16">
-                <span className="font-serif text-xl font-bold text-espresso">Vita<span className="text-gold italic">Origen</span></span>
+                <Link to="/" onClick={() => setIsMenuOpen(false)} className="shrink-0">
+                  <img src="/logo.png" alt="VitaOrigen" className="h-[32px] w-auto" />
+                </Link>
                 <button onClick={() => setIsMenuOpen(false)} className="text-espresso p-2 hover:bg-gold/10 rounded-full transition-colors">
                   <CloseIcon size={24} />
                 </button>
@@ -358,7 +360,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 md:col-span-2">
-              <div className="font-serif text-3xl font-black mb-6 tracking-tight">Vita<span className="text-gold italic">Origen</span></div>
+              <Link to="/" className="inline-block mb-6">
+                <img src="/logo.png" alt="VitaOrigen" className="h-[40px] w-auto" />
+              </Link>
               <p className="text-white/40 text-[15px] leading-relaxed max-w-sm">
                 {language === 'fr' 
                   ? "Le fuel naturel des étudiants. Énergie saine, fruits lyophilisés, sans compromis. Fait avec passion au Maroc." 
